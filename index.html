@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priam Tyagi — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0d1117;
+    --bg-raised: #141b24;
+    --bg-card: #161d27;
+    --line: #232c38;
+    --line-soft: #1b232e;
+    --text: #e8ecf1;
+    --text-dim: #8b96a5;
+    --text-faint: #5a6472;
+    --amber: #e8a33d;
+    --amber-dim: #7a5a26;
+    --teal: #5eead4;
+    --violet: #b9a1f2;
+    --rose: #f2a1b0;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--amber); color:#0d1117;}
+  a{color:inherit; text-decoration:none;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; font-weight:600; letter-spacing:-0.01em;}
+
+  .wrap{max-width:1040px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(13,17,23,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:flex-end; height:58px; overflow-x:auto;}
+  .nav-links{display:flex; gap:22px; font-size:13px; color:var(--text-dim); flex-shrink:0;}
+  .nav-links a:hover{color:var(--text);}
+
+  /* ---------- hero ---------- */
+  header.hero{padding:100px 0 80px; border-bottom:1px solid var(--line-soft); position:relative; overflow:hidden;}
+  h1.title{font-size:clamp(38px, 6vw, 60px); line-height:1.05; max-width:820px;}
+  h1.title .accent{color:var(--amber);}
+  .hero-sub{margin-top:20px; font-size:17px; color:var(--text-dim); max-width:580px;}
+  .hero-links{display:flex; gap:12px; margin-top:34px; flex-wrap:wrap;}
+  .pill-link{
+    font-family:'JetBrains Mono', monospace; font-size:13px;
+    border:1px solid var(--line); border-radius:100px;
+    padding:9px 18px; color:var(--text-dim); transition:all 0.15s ease;
+  }
+  .pill-link:hover{border-color:var(--amber); color:var(--amber);}
+  .pill-link.solid{background:var(--amber); color:#0d1117; border-color:var(--amber); font-weight:500;}
+  .pill-link.solid:hover{background:#f0b25a; color:#0d1117;}
+
+  /* ---------- section shell ---------- */
+  section{padding:76px 0; border-bottom:1px solid var(--line-soft);}
+  .section-head{display:flex; align-items:baseline; gap:14px; margin-bottom:10px; flex-wrap:wrap;}
+  .section-num{font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--text-faint);}
+  .section-title{font-size:26px;}
+  .section-desc{color:var(--text-dim); font-size:15px; margin-top:8px; margin-bottom:34px; max-width:640px;}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:48px; align-items:start;}
+  .about-grid p{color:var(--text-dim); font-size:15.5px; margin-bottom:16px;}
+  .about-grid p strong{color:var(--text); font-weight:500;}
+  .stat-card{
+    background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:22px 24px; font-family:'JetBrains Mono', monospace; font-size:13px;
+  }
+  .stat-card .stat-title{color:var(--text-faint); margin-bottom:14px; letter-spacing:0.03em;}
+  .stat-row{display:flex; justify-content:space-between; gap:14px; padding:8px 0; border-top:1px solid var(--line-soft); color:var(--text-dim);}
+  .stat-row:first-of-type{border-top:none;}
+  .stat-row span:last-child{color:var(--text); text-align:right;}
+
+  /* ---------- experience & extracurricular cards ---------- */
+  .role-list{display:flex; flex-direction:column; gap:14px;}
+  .role-card{
+    background:var(--bg-card); border:1px solid var(--line); border-left:3px solid var(--teal);
+    border-radius:var(--radius); padding:22px 24px;
+  }
+  .role-top{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:4px;}
+  .role-title{font-size:16px; font-weight:600; font-family:'Space Grotesk',sans-serif;}
+  .role-org{font-size:13.5px; color:var(--text-dim); margin-bottom:10px;}
+  .role-date{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint); white-space:nowrap;}
+  .role-bullets{margin:0 0 14px 18px; padding:0; color:var(--text-dim); font-size:13.8px;}
+  .role-bullets li{margin-bottom:5px;}
+
+  /* ---------- filter bar ---------- */
+  .filter-bar{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px;}
+  .filter-chip{
+    font-family:'JetBrains Mono', monospace; font-size:12.5px;
+    border:1px solid var(--line); border-radius:6px; padding:7px 13px;
+    color:var(--text-dim); cursor:pointer; transition:all 0.15s ease; background:none;
+  }
+  .filter-chip:hover{border-color:var(--text-dim); color:var(--text);}
+  .filter-chip.active{background:var(--amber); border-color:var(--amber); color:#0d1117; font-weight:500;}
+  .filter-hint{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint); margin-bottom:36px;}
+
+  /* ---------- timeline / semester blocks ---------- */
+  .timeline{position:relative;}
+  .semester-block{position:relative; padding-left:26px; margin-bottom:56px; border-left:1px solid var(--line);}
+  .semester-block:last-child{margin-bottom:0;}
+  .semester-block::before{
+    content:''; position:absolute; left:-5px; top:4px; width:9px; height:9px;
+    border-radius:50%; background:var(--bg); border:2px solid var(--amber);
+  }
+  .semester-head{display:flex; align-items:baseline; gap:12px; margin-bottom:20px; flex-wrap:wrap;}
+  .semester-title{font-size:20px; font-family:'Space Grotesk',sans-serif; font-weight:600;}
+  .semester-count{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint);}
+  .semester-flag{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--amber);
+    border:1px solid var(--amber-dim); border-radius:5px; padding:3px 8px;
+  }
+
+  .subsection-label{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-faint);
+    text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px;
+  }
+
+  .course-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:12px; margin-bottom:26px;}
+  .course-card{
+    background:var(--bg-raised); border:1px solid var(--line-soft); border-radius:8px;
+    padding:14px 16px;
+  }
+  .course-code{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--amber); margin-bottom:5px;}
+  .course-name{font-size:14.5px; color:var(--text); font-weight:500;}
+
+  .project-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(300px,1fr)); gap:16px;}
+  .card{
+    background:var(--bg-card); border:1px solid var(--line); border-left:3px solid var(--amber-dim);
+    border-radius:var(--radius); padding:22px 22px 20px; transition:border-color 0.15s ease, transform 0.15s ease;
+  }
+  .card:hover{border-left-color:var(--amber); transform:translateY(-2px);}
+  .card-title{font-size:16px; font-weight:600; font-family:'Space Grotesk',sans-serif; margin-bottom:10px;}
+  .card-desc{font-size:13.5px; color:var(--text-dim); margin-bottom:14px;}
+  .tag-row{display:flex; flex-wrap:wrap; gap:6px;}
+  .tag-row:not(:empty){margin-bottom:0;}
+  .tag{
+    font-family:'JetBrains Mono', monospace; font-size:11px; padding:4px 9px;
+    border-radius:5px; border:1px solid; white-space:nowrap;
+  }
+  .tag.lang{color:var(--teal); border-color:rgba(94,234,212,0.3); background:rgba(94,234,212,0.06);}
+  .tag.tool{color:var(--violet); border-color:rgba(185,161,242,0.3); background:rgba(185,161,242,0.06);}
+  .tag.soft{color:var(--rose); border-color:rgba(242,161,176,0.3); background:rgba(242,161,176,0.06);}
+  .no-results{color:var(--text-faint); font-family:'JetBrains Mono',monospace; font-size:13px; padding:20px 0;}
+
+  /* ---------- extracurriculars ---------- */
+  .org-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:16px;}
+  .org-card{
+    background:var(--bg-card); border:1px solid var(--line); border-left:3px solid var(--violet);
+    border-radius:var(--radius); padding:20px 22px;
+  }
+  .org-name{font-size:15.5px; font-weight:600; font-family:'Space Grotesk',sans-serif; margin-bottom:10px;}
+  .org-role{display:flex; justify-content:space-between; gap:10px; font-size:13px; color:var(--text-dim); padding:5px 0; border-top:1px solid var(--line-soft);}
+  .org-role:first-of-type{border-top:none;}
+  .org-role b{color:var(--text); font-weight:500;}
+  .org-role span:last-child{font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--text-faint); white-space:nowrap;}
+  .org-desc{font-size:13px; color:var(--text-dim); margin-top:10px;}
+
+  /* ---------- publications ---------- */
+  .pub-card{
+    background:var(--bg-card); border:1px solid var(--line); border-left:3px solid var(--rose);
+    border-radius:var(--radius); padding:20px 22px; font-size:14px; color:var(--text-dim);
+  }
+  .pub-card a{color:var(--teal); border-bottom:1px solid rgba(94,234,212,0.3);}
+
+  /* ---------- skills summary ---------- */
+  .skills-cols{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:30px;}
+  .skills-col-title{font-size:13px; color:var(--text-faint); font-family:'JetBrains Mono',monospace; margin-bottom:14px;}
+  .skills-col .tag-row{margin-bottom:0;}
+
+  /* ---------- footer ---------- */
+  footer{padding:60px 0 80px;}
+  .footer-grid{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;}
+  footer h2{font-size:28px; margin-bottom:10px;}
+  footer p{color:var(--text-dim); font-size:14.5px; margin-bottom:22px;}
+  .footer-links{display:flex; gap:12px; flex-wrap:wrap;}
+  .footer-note{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint);}
+
+  @media (max-width:720px){
+    .about-grid{grid-template-columns:1fr;}
+    header.hero{padding:70px 0 56px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-links">
+      <a href="#experience">experience</a>
+      <a href="#timeline">timeline</a>
+      <a href="#extracurriculars">extracurriculars</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1 class="title">Priam Tyagi</h1>
+    <p class="hero-sub">Aerospace Engineering student at the University of Cincinnati, minoring in Materials Engineering with an Engineering Project Management Certificate. This page walks through my research experience, coursework, and projects by semester — with the exact tools each one used — plus the leadership work outside the classroom.</p>
+    <div class="hero-links">
+      <a class="pill-link solid" href="#experience">view experience →</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="section-num mono">// 00 — about</div>
+      <h2 class="section-title" style="margin-top:6px; margin-bottom:20px;">A bit of context</h2>
+      <p>I'm a <strong>fifth-year Aerospace Engineering student</strong> at the University of Cincinnati, minoring in Materials Engineering and holding an Engineering Project Management Certificate. My coursework and co-ops have circled around propulsion CFD, structural analysis, and materials characterization.</p>
+      <p>I've spent four co-op terms running CFD simulations, analyzing metallography data, and validating numerical models against experimental results — and I've spent just as much time teaching, mentoring, and leading student teams alongside it.</p>
+      <p>Below is my full record: research and teaching experience, coursework and class projects by semester, extracurricular leadership, and a published paper from my materials research.</p>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">// quick_facts.json</div>
+      <div class="stat-row"><span>school</span><span>University of Cincinnati</span></div>
+      <div class="stat-row"><span>degree</span><span>B.S. Aerospace Engineering</span></div>
+      <div class="stat-row"><span>minor</span><span>Materials Engineering</span></div>
+      <div class="stat-row"><span>certificate</span><span>Eng. Project Management</span></div>
+      <div class="stat-row"><span>program</span><span>University Honors</span></div>
+      <div class="stat-row"><span>graduating</span><span>April 2027</span></div>
+      <div class="stat-row"><span>status</span><span style="color:var(--teal);">open to full-time work</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num mono">// 01</span>
+      <h2 class="section-title">Experience</h2>
+    </div>
+    <p class="section-desc">Research, co-op, and teaching roles — most recent first.</p>
+    <div class="role-list" id="roleList"></div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num mono">// 02</span>
+      <h2 class="section-title">Coursework &amp; Class Projects</h2>
+    </div>
+    <p class="section-desc">Every semester of the degree, sorted most recent first. Click a skill tag to filter down to projects that used it.</p>
+    <div class="filter-bar" id="filterBar"></div>
+    <div class="filter-hint" id="filterHint">filter by skill · showing all semesters</div>
+    <div class="timeline" id="timelineContainer"></div>
+  </div>
+</section>
+
+<section id="extracurriculars">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num mono">// 03</span>
+      <h2 class="section-title">Extracurriculars &amp; Leadership</h2>
+    </div>
+    <p class="section-desc">Student organizations and leadership roles alongside coursework.</p>
+    <div class="org-grid" id="orgGrid"></div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num mono">// 04</span>
+      <h2 class="section-title">Publications</h2>
+    </div>
+    <div class="pub-card">
+      Evans, K. S., Timberlake, D. M., Tyagi, P., Miller, V. M., &amp; Payton, E. J. (2024). On the Sources of Discrepancies Between Grain Size Measurements. <em>Metallography, Microstructure and Analysis.</em> <a href="https://doi.org/10.1007/s13632-024-01124-8" target="_blank">doi.org/10.1007/s13632-024-01124-8</a>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-num mono">// 05</span>
+      <h2 class="section-title">Skills at a glance</h2>
+    </div>
+    <p class="section-desc">Every skill above, grouped — a fast scan if you don't want to read the whole page.</p>
+    <div class="skills-cols" id="skillsCols"></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap footer-grid">
+    <div>
+      <h2>Let's talk.</h2>
+      <p>Looking for full-time aerospace roles starting April 2027. Best reached by email.</p>
+      <div class="footer-links">
+        <a class="pill-link solid" href="mailto:tyagipm@mail.uc.edu">tyagipm@mail.uc.edu</a>
+        <a class="pill-link" href="#">linkedin.com/in/priamtyagi</a>
+      </div>
+    </div>
+    <div class="footer-note">portfolio.html — last updated 2026</div>
+  </div>
+</footer>
+
+<script>
+// ---------------------------------------------------------
+// EDIT YOUR DATA HERE
+// Tag types control chip color:
+//   "lang" = software / programming languages (teal)
+//   "tool" = analysis methods, lab/test equipment (violet)
+//   "soft" = engineering practices / soft skills (rose)
+// ---------------------------------------------------------
+
+const experience = [
+  {
+    title: "Research Intern",
+    org: "Amity Institute of Aerospace Engineering, India",
+    date: "May 2026 – Aug 2026",
+    bullets: [
+      "Performed 7+ CFD simulations of internal flows in rocket propulsion systems using ANSYS Fluent.",
+      "Investigated shock formation and shock-boundary-layer interaction in solid rocket engines.",
+      "Validated numerical models against experimental data to enhance confidence in simulation-driven design.",
+      "Prepared a technical report with 42+ visualizations (streamlines, pressure contours, convergence plots) to support engineering teams and accelerate design cycles.",
+    ],
+    tags: [["ANSYS Fluent","lang"],["CFD","tool"],["Technical Writing","soft"]],
+  },
+  {
+    title: "Undergraduate Research Co-op",
+    org: "Department of Mechanical and Materials Engineering, University of Cincinnati",
+    date: "Jan 2024 – Apr 2024, Sep 2024 – Dec 2024",
+    bullets: [
+      "Analyzed 15+ metallography images and prepared 5+ metallic samples to generate interpretable microstructural data.",
+      "Operated lab equipment independently and assisted in ongoing research projects to expand technical skills.",
+      "Conducted literature reviews and documented findings through detailed reports and presentations.",
+      "Collaborated in weekly meetings to discuss project goals, troubleshoot challenges, and support team productivity.",
+    ],
+    tags: [["Scanning Electron Microscopy","tool"],["Materials Science","soft"],["Technical Writing","soft"]],
+  },
+  {
+    title: "Lead Teaching Assistant (Part-Time)",
+    org: "Department of Engineering and Computing Education, CEAS",
+    date: "Fall 2026",
+    bullets: [
+      "Managed teams of 2–3 PTAs per section, mentoring them to be approachable, empathetic resources for students",
+      "Oversaw PTA hours to ensure work was completed efficiently and effectively",
+      "Collaborated with instructors to support student learning outcomes",
+    ],
+    tags: [["Mentoring","soft"],["Leadership","soft"]],
+  },
+  {
+    title: "Teaching Assistant",
+    org: "Department of Engineering and Computing Education, University of Cincinnati",
+    date: "Fall 2023, Summer 2024, Spring 2025, Fall 2025, Spring 2026",
+    bullets: [
+      "Assisted 72 students during in-class activities and facilitated tutoring sessions to reinforce course concepts.",
+      "Prepared for classes by reviewing materials, solving activities in advance, and participating in weekly training sessions.",
+      "Collaborated with a team of 90 Teaching Assistants to grade assignments, exams, and projects, ensuring consistency and accuracy in evaluations.",
+    ],
+    tags: [["Mentoring","soft"],["Communication","soft"]],
+  },
+  {
+    title: "Peer Leader",
+    org: "Learning Commons, University of Cincinnati",
+    date: "Fall 2025, Fall 2026",
+    bullets: [
+      "Provided academic support, mentoring and facilitation for a Learning Community (LC) of 20 students throughout the semester.",
+      "Held weekly office hours, and developed lesson plans tailored to the needs of students.",
+      "Collaborated with faculty, advisors, and organizations to deliver a high-quality LC experience preparing students for subsequent academic accomplishments.",
+    ],
+    tags: [["Mentoring","soft"],["Leadership","soft"]],
+  },
+];
+
+// Semesters verified against official UC transcript (Spring 2026 print).
+// "flag" marks co-op terms and the current capstone term.
+const semesters = [
+  { name: "Spring 2027", order: 12 },
+  { name: "Fall 2026",   order: 11 },
+  { name: "Summer 2026", order: 10, flag: "co-op term" },
+  { name: "Spring 2026", order: 9,  flag: "in progress" },
+  { name: "Fall 2025",   order: 8 },
+  { name: "Summer 2025", order: 7,  flag: "co-op term" },
+  { name: "Spring 2025", order: 6 },
+  { name: "Fall 2024",   order: 5,  flag: "co-op term" },
+  { name: "Summer 2024", order: 4 },
+  { name: "Spring 2024", order: 3,  flag: "co-op term" },
+  { name: "Fall 2023",   order: 2 },
+  { name: "Spring 2023", order: 1 },
+  { name: "Fall 2022",   order: 0 },
+];
+
+const projects = [
+  { title:"Senior Design: Spacecraft Design Capstone", semester:"Spring 2027", desc:"Continuation of the senior spacecraft capstone sequence, carrying subsystem design through final review as part of the C3 COSMIC Capstone Challenge.", tags:[], links:[] },
+  { title:"Senior Design: Spacecraft Design 1", semester:"Fall 2026", desc:"First term of the two-semester senior capstone, applying systems engineering to a full spacecraft design as part of the C3 COSMIC Capstone Challenge.", tags:[], links:[] },
+  { title:"Advanced Aircraft Performance", semester:"Spring 2026", desc:"Performed fuel calculations for complex mission profiles involving advanced maneuvering.", tags:[["Excel","lang"]], links:[] },
+  { title:"Mechanical Behavior of Materials", semester:"Spring 2026", desc:"Conducted a literature review on a specific mechanical behavior topic in materials science.", tags:[["Materials Science","soft"],["Technical Writing","soft"]], links:[] },
+  { title:"Materials Selection in Design", semester:"Spring 2026", desc:"Used the Granta EduPack material database and selection charts to identify optimal materials against defined engineering constraints.", tags:[["Granta EduPack","lang"],["Materials Science","soft"]], links:[] },
+  { title:"Applied Leadership in Project Teams", semester:"Spring 2026", desc:"Acted as project manager for a simulated engineering scenario, developing scope, budget, schedule, and risk management plans.", tags:[["MS Project","lang"],["Project Management","soft"]], links:[] },
+  { title:"Space Systems Engineering: Spacecraft CDR", semester:"Fall 2025", desc:"Applied systems engineering methodology to carry a spacecraft project from initial definition through Critical Design Review as part of a 24-person team simulating real-world aerospace roles.", tags:[["Systems Engineering","soft"],["Team Leadership","soft"]], links:[] },
+  { title:"Rocket Propulsion System Design", semester:"Fall 2025", desc:"Designed a rocket system with optimized motor and propellant selection and a custom nozzle; modeled trajectory and ballistic performance to validate design choices.", tags:[["MATLAB","lang"],["Propulsion Design","tool"]], links:[] },
+  { title:"Airbreathing Propulsion: Compressor Design", semester:"Fall 2025", desc:"Designed turbomachinery components (compressor) to meet specified physical and performance requirements.", tags:[["Turbomachinery Design","tool"]], links:[] },
+  { title:"Flight Mechanics: PID Controller & F-16 Stability", semester:"Fall 2025", desc:"Developed a PID controller for flight stability and control, and derived stability derivatives from real F-16 flight test data.", tags:[["MATLAB","lang"],["Controls","tool"]], links:[] },
+  { title:"Temperature-Sensitive Morphing Wing Modeling", semester:"Summer 2025", desc:"Applied thermal coefficient theory and lift-to-wing-shape relationships to develop a feasible morphing wing design across 6+ material/geometry configurations, using Finite Element Analysis software to run simulations across multiple wing design iterations, comparing structural and aerodynamic performance.", tags:[["ABAQUS","lang"],["StarCCM+","lang"],["FEA","tool"]], links:[] },
+  { title:"Aerodynamics: 2D/3D CFD Study", semester:"Spring 2025", desc:"Performed CFD simulations of 2D airfoils and 3D wings in StarCCM+ to evaluate lift, drag, and moment characteristics.", tags:[["StarCCM+","lang"],["CFD","tool"]], links:[] },
+  { title:"Aircraft Performance & Design", semester:"Spring 2025", desc:"Calculated flight mission parameters (time, fuel burn, range) for maneuvering flight profiles, and designed airliner fuselage, wing, and tail geometry including weight and CG estimation.", tags:[["Excel","lang"]], links:[] },
+  { title:"Global Technical Workforce: Cross-Cultural Study", semester:"Spring 2025", desc:"Collaborated with students from a partner French university to research and compare U.S. and French corporate cultures, producing a shared infographic deliverable.", tags:[["Cross-Cultural Collaboration","soft"]], links:[] },
+  { title:"Systems Engineering: Kit-Based Glider", semester:"Fall 2023", desc:"Applied systems and requirements engineering principles to a kit-based glider build, conducting iterative modifications and trial-and-error testing to optimize flight distance and duration.", tags:[["Systems Engineering","soft"]], links:[] },
+  { title:"Intro to Aerospace Design: Glider Prototype", semester:"Spring 2023", desc:"Learned SOLIDWORKS fundamentals and applied them to design a wooden glider prototype, iteratively optimizing it with a team using performance computations.", tags:[["SOLIDWORKS","lang"]], links:[] },
+  { title:"ENED 1100: Kitchen Appliance Redesign & Line-Following Robot", semester:"Fall 2022", desc:"Completed two full-cycle design projects: a kitchen appliance redesign and an autonomous line-following pick-and-place robot. Led brainstorming sessions and managed timelines across the team.", tags:[["Team Leadership","soft"],["Project Management","soft"]], links:[] },
+  { title:"ENED 1120: Timing Device & Barcode-Scanning Robot", semester:"Spring 2023", desc:"Completed two full-cycle design projects: a non-electronic timing device and an advanced robot with barcode scanning and navigation. Led brainstorming sessions and managed timelines across the team.", tags:[["Team Leadership","soft"],["Project Management","soft"]], links:[] },
+];
+
+// Coursework verified against official UC transcript (Spring 2026 print date).
+const coursework = [
+  { code:"", name:"Spacecraft Design (Capstone)", semester:"Spring 2027" },
+  { code:"AEEM 5013", name:"Spacecraft Design I", semester:"Fall 2026" },
+  { code:"AEEM 5063", name:"Fundamentals of Astrodynamics", semester:"Fall 2026" },
+  { code:"AEEM 5081L", name:"Advanced Aerodynamics Lab", semester:"Fall 2026" },
+  { code:"ENGR 5110", name:"Effectiveness in Technical Organizations", semester:"Fall 2026" },
+  { code:"ENGR 5114", name:"Engineering Project Management", semester:"Fall 2026" },
+  { code:"MTEN 5113", name:"Smart Structures", semester:"Fall 2026" },
+  { code:"",           name:"Technical and Scientific Writing", semester:"Fall 2026" },
+  { code:"AEEM 5092", name:"Advanced Aircraft Performance", semester:"Spring 2026" },
+  { code:"ENGR 5116", name:"Applied Leadership in Project Teams", semester:"Spring 2026" },
+  { code:"MTEN 2032", name:"Material Science", semester:"Spring 2026" },
+  { code:"MTEN 3076", name:"Materials Selection in Design", semester:"Spring 2026" },
+  { code:"MTEN 5197", name:"Mechanical Behavior of Materials", semester:"Spring 2026" },
+  { code:"AEEM 4001", name:"Aero Structures & Materials", semester:"Fall 2025" },
+  { code:"AEEM 4012", name:"Flight Mechanics", semester:"Fall 2025" },
+  { code:"AEEM 4022", name:"Space Systems Engineering", semester:"Fall 2025" },
+  { code:"AEEM 4042", name:"Fundamentals of Control Theory", semester:"Fall 2025" },
+  { code:"AEEM 4063", name:"Airbreathing Propulsion", semester:"Fall 2025" },
+  { code:"AEEM 4064", name:"Rocket Propulsion", semester:"Fall 2025" },
+  { code:"PD 2050",   name:"Co-op Community Engagement", semester:"Fall 2025" },
+  { code:"AEEM 3013", name:"Gas Dynamics", semester:"Spring 2025" },
+  { code:"AEEM 3014", name:"Aerodynamics", semester:"Spring 2025" },
+  { code:"AEEM 3022", name:"Modeling & Simulation of Dynamic Systems", semester:"Spring 2025" },
+  { code:"AEEM 3042", name:"Aircraft Performance & Design", semester:"Spring 2025" },
+  { code:"AEEM 3058", name:"Solid Mechanics I", semester:"Spring 2025" },
+  { code:"ENGR 3001", name:"Global Technical Workforce", semester:"Spring 2025" },
+  { code:"AEEM 2022", name:"Thermodynamics & Energy Systems", semester:"Summer 2024" },
+  { code:"AEEM 2032", name:"Dynamics", semester:"Summer 2024" },
+  { code:"AEEM 2044", name:"Basic Fluid Dynamics & Lab", semester:"Summer 2024" },
+  { code:"AEEM 2052", name:"Engineering Measurements", semester:"Summer 2024" },
+  { code:"MATH 2073", name:"Differential Equations", semester:"Summer 2024" },
+  { code:"PD 2010",   name:"Exploring Life & Work Abroad", semester:"Summer 2024" },
+  { code:"AEEM 1001", name:"Statics & Basic Strength", semester:"Fall 2023" },
+  { code:"AEEM 2013", name:"Intro to Systems Engineering", semester:"Fall 2023" },
+  { code:"AEEM 2058", name:"Aerospace Computing", semester:"Fall 2023" },
+  { code:"MATH 2063", name:"Multivariable Calculus", semester:"Fall 2023" },
+  { code:"PHYS 2002", name:"College Physics II (+ Lab)", semester:"Fall 2023" },
+  { code:"AEEM 1022", name:"Intro to Aerospace Design", semester:"Spring 2023" },
+  { code:"ENED 1120", name:"Engineering Design Thinking II", semester:"Spring 2023" },
+  { code:"HNRS 1010", name:"Gateway University Honors", semester:"Spring 2023" },
+  { code:"MATH 1062", name:"Calculus II", semester:"Spring 2023" },
+  { code:"PHYS 2001", name:"College Physics I (+ Lab)", semester:"Spring 2023" },
+  { code:"CHEM 1040", name:"General Chemistry I (+ Lab)", semester:"Fall 2022" },
+  { code:"ENED 1100", name:"Engineering Design Thinking I", semester:"Fall 2022" },
+  { code:"MATH 1061", name:"Calculus I", semester:"Fall 2022" },
+  { code:"PD 1011",   name:"Intro to Co-op (CEAS)", semester:"Fall 2022" },
+];
+
+const extracurriculars = [
+  {
+    name: "American Institute of Aeronautics and Astronautics (AIAA), UC Chapter",
+    roles: [
+      { role: "Member", date: "Aug 2024 – present" },
+      { role: "Programming Chair", date: "Aug 2024 – Apr 2025" },
+      { role: "Communications Chair", date: "Aug 2025 – Apr 2026" },
+    ],
+  },
+  {
+    name: "Tau Beta Pi, Ohio Beta Chapter",
+    roles: [
+      { role: "Member", date: "Mar 2025 – present" },
+      { role: "VP Activities", date: "Aug 2026 – present" },
+    ],
+  },
+  {
+    name: "UC IPALS (International Partners and Leaders)",
+    roles: [
+      { role: "Member", date: "Jan 2023 – present" },
+      { role: "Internal Outreach and Development Chair", date: "Jan 2025 – Apr 2025" },
+    ],
+    desc: "Facilitated events for international students and supported new students adjusting to campus and U.S. culture.",
+  },
+  {
+    name: "National Society of Leadership and Success (NSLS)",
+    roles: [
+      { role: "Member", date: "Apr 2025 – present" },
+    ],
+  },
+  {
+    name: "CEAS Tribunal",
+    roles: [
+      { role: "Academic Affairs Committee Member", date: "Oct 2022 – Apr 2023" },
+    ],
+    desc: "Gathered student feedback to improve the academic side of the college; organized a Research Workshop and 'What's Next' event, arranging speakers, presentation content, flyers, and logistics.",
+  },
+];
+
+// ---------------------------------------------------------
+// Rendering logic — no need to edit below this line
+// ---------------------------------------------------------
+
+function renderExperience(){
+  const container = document.getElementById('roleList');
+  container.innerHTML = experience.map(e => `
+    <div class="role-card">
+      <div class="role-top">
+        <div class="role-title">${e.title}</div>
+        <div class="role-date">${e.date}</div>
+      </div>
+      <div class="role-org">${e.org}</div>
+      <ul class="role-bullets">${e.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
+      <div class="tag-row">${e.tags.map(t => `<span class="tag ${t[1]}">${t[0]}</span>`).join('')}</div>
+    </div>
+  `).join('');
+}
+
+const allTags = [...new Set(projects.flatMap(p => p.tags.map(t => t[0])))].sort();
+let activeFilter = null;
+
+function renderFilterBar(){
+  const bar = document.getElementById('filterBar');
+  bar.innerHTML = '';
+  const allChip = document.createElement('button');
+  allChip.className = 'filter-chip' + (activeFilter === null ? ' active' : '');
+  allChip.textContent = 'all';
+  allChip.onclick = () => { activeFilter = null; renderAll(); };
+  bar.appendChild(allChip);
+  allTags.forEach(tag => {
+    const chip = document.createElement('button');
+    chip.className = 'filter-chip' + (activeFilter === tag ? ' active' : '');
+    chip.textContent = tag;
+    chip.onclick = () => { activeFilter = tag; renderAll(); };
+    bar.appendChild(chip);
+  });
+}
+
+function renderTimeline(){
+  const container = document.getElementById('timelineContainer');
+  const hint = document.getElementById('filterHint');
+  hint.textContent = activeFilter ? `filter by skill · showing projects tagged "${activeFilter}"` : 'filter by skill · showing all semesters';
+  container.innerHTML = '';
+
+  const sorted = [...semesters].sort((a,b) => b.order - a.order);
+  let anyVisible = false;
+
+  sorted.forEach(sem => {
+    const semProjects = projects.filter(p => p.semester === sem.name);
+    const semCourses = coursework.filter(c => c.semester === sem.name);
+    const filteredProjects = activeFilter ? semProjects.filter(p => p.tags.some(t => t[0] === activeFilter)) : semProjects;
+
+    // Skip semesters with nothing to show for the current filter
+    if(activeFilter){
+      if(filteredProjects.length === 0) return;
+    } else {
+      if(semCourses.length === 0 && semProjects.length === 0 && !sem.flag) return;
+    }
+    anyVisible = true;
+
+    const block = document.createElement('div');
+    block.className = 'semester-block';
+
+    const courseGridHTML = semCourses.length
+      ? `<div class="subsection-label">Courses</div>
+         <div class="course-grid">${semCourses.map(c => `
+            <div class="course-card">
+              <div class="course-name">${c.name}</div>
+            </div>
+         `).join('')}</div>`
+      : '';
+
+    const projectGridHTML = filteredProjects.length
+      ? `<div class="subsection-label">Projects</div>
+         <div class="project-grid">${filteredProjects.map(p => `
+            <div class="card">
+              <div class="card-title">${p.title}</div>
+              <div class="card-desc">${p.desc}</div>
+              <div class="tag-row">${p.tags.map(t => `<span class="tag ${t[1]}">${t[0]}</span>`).join('')}</div>
+            </div>
+         `).join('')}</div>`
+      : '';
+
+    const flagHTML = sem.flag ? `<span class="semester-flag">${sem.flag}</span>` : '';
+
+    block.innerHTML = `
+      <div class="semester-head">
+        <div class="semester-title">${sem.name}</div>
+        ${flagHTML}
+        <div class="semester-count">${semCourses.length} course${semCourses.length!==1?'s':''} · ${filteredProjects.length} project${filteredProjects.length!==1?'s':''}</div>
+      </div>
+      ${courseGridHTML}
+      ${projectGridHTML}
+    `;
+    container.appendChild(block);
+  });
+
+  if(!anyVisible){
+    container.innerHTML = '<div class="no-results">no projects match that filter.</div>';
+  }
+}
+
+function renderExtracurriculars(){
+  const container = document.getElementById('orgGrid');
+  container.innerHTML = extracurriculars.map(org => `
+    <div class="org-card">
+      <div class="org-name">${org.name}</div>
+      ${org.roles.map(r => `<div class="org-role"><b>${r.role}</b><span>${r.date}</span></div>`).join('')}
+      ${org.desc ? `<div class="org-desc">${org.desc}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+function renderSkillsSummary(){
+  const container = document.getElementById('skillsCols');
+  container.innerHTML = '';
+  const cats = {
+    "Software & Languages": new Set(),
+    "Analysis & Lab Methods": new Set(),
+    "Engineering Practices": new Set(),
+  };
+  const allSourceTags = [
+    ...projects.flatMap(p => p.tags),
+    ...experience.flatMap(e => e.tags),
+  ];
+  allSourceTags.forEach(([name, type]) => {
+    if(type === 'lang') cats["Software & Languages"].add(name);
+    else if(type === 'tool') cats["Analysis & Lab Methods"].add(name);
+    else cats["Engineering Practices"].add(name);
+  });
+  // Additional skills from resume not tied to a specific project/experience entry
+  ["Python","AutoCAD","ANSYS Workbench","ABAQUS/CAE","Minitab","MS Office (Word, PowerPoint, Excel, Project)"].forEach(s => cats["Software & Languages"].add(s));
+  cats["Analysis & Lab Methods"].add("Lean Six Sigma Black Belt");
+
+  Object.entries(cats).forEach(([title, set]) => {
+    const col = document.createElement('div');
+    col.className = 'skills-col';
+    const typeClass = title === "Software & Languages" ? "lang" : title === "Analysis & Lab Methods" ? "tool" : "soft";
+    col.innerHTML = `
+      <div class="skills-col-title">${title}</div>
+      <div class="tag-row">${[...set].sort().map(s => `<span class="tag ${typeClass}">${s}</span>`).join('')}</div>
+    `;
+    container.appendChild(col);
+  });
+}
+
+function renderAll(){
+  renderFilterBar();
+  renderTimeline();
+}
+
+renderExperience();
+renderAll();
+renderExtracurriculars();
+renderSkillsSummary();
+</script>
+
+</body>
+</html>
